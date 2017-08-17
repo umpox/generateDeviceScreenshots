@@ -36,19 +36,10 @@ for (modifier in modifiers) {
             forceYes = true;
             break;
         default:
-            console.log('Incorrect modifier provided.');
+            console.log('Incorrect modifier provided: ' + modifiers[modifier]);
             process.exit(0);
     }
 }
-
-
-new Confirm('This will generate ' + numImages + ' images, are you sure?').ask(function(answer) {
-    if (answer) {
-        generate();
-    } else {
-        process.exit(0);
-    }
-});
 
 let generate = function() {
     puppeteer.launch().then(async browser => {
@@ -71,3 +62,17 @@ let generate = function() {
         browser.close();
     });
 };
+
+if (forceYes) {
+    generate();
+} else {
+    new Confirm('This will generate ' + numImages + ' images, are you sure you wish to proceed').ask(function(answer) {
+        if (answer) {
+            generate();
+        } else {
+            process.exit(0);
+        }
+    });
+}
+
+
