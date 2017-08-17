@@ -2,16 +2,23 @@ const puppeteer = require('puppeteer');
 const devices = require('puppeteer/DeviceDescriptors');
 const Confirm = require('prompt-confirm');
 
+let parameters = process.argv.slice(2);
+let numImages = 0;
+
+//Required inputs
+let inputtedURL = parameters[0];
+let selectedDevices = parameters[1];
+
+//Modifier inputs
+let modifiers = parameters.slice(2);
+let fullScreenStatus = false;
+let forceYes = false;
+
+//Check user has provided enough information
 if (process.argv.length <= 2) {
     console.log("Incorrect Usage. Please use the following format:\n npm run generate-screenshots https://www.google.com ['iPhone 6', iPhone 5'] | all");
     process.exit(0);
 }
-
-let parameters = process.argv.slice(2);
-let numImages = 0;
-let inputtedURL = parameters[0];
-let selectedDevices = parameters[1];
-let fullScreenStatus = false;
 
 if ( selectedDevices === "all" ) {
     numImages = devices.length;
@@ -20,10 +27,18 @@ if ( selectedDevices === "all" ) {
     numImages = selectedDevices.length;
 }
 
-//This will call under the example command:
-// npm run generate-screenshots https://www.google.com ['iPhone6'] fullscreen
-if (parameters[2] === 'fullscreen') {
-    fullScreenStatus = true;
+for (modifier in modifiers) {
+    switch (modifiers[modifier]) {
+        case 'fullscreen':
+            fullScreenStatus = true;
+            break;
+        case 'force-yes':
+            forceYes = true;
+            break;
+        default:
+            console.log('Incorrect modifier provided.');
+            process.exit(0);
+    }
 }
 
 
