@@ -5,12 +5,12 @@ const Confirm = require('prompt-confirm');
 let parameters = process.argv.slice(2);
 let numImages = 0;
 let inputtedURL = parameters[0];
-let selectedDevices = parameters[1].split(/,\s*/);
+let selectedDevices = parameters[1];
 
 if ( selectedDevices === "all" ) {
     numImages = devices.length;
 } else {
-    selectedDevices = Array.from(selectedDevices);
+    selectedDevices = Array.from(selectedDevices.split(/,\s*/));
     numImages = selectedDevices.length;
 }
 
@@ -26,17 +26,17 @@ let generate = function() {
     puppeteer.launch().then(async browser => {
         let page = await browser.newPage();
 
-        await page.goto(inputtedURL);
-
         if (selectedDevices !== "all") {
             for (device in selectedDevices) {
                 await page.emulate( devices[ selectedDevices[device] ] );
-                await page.screenshot({path: 'screens/' + selectedDevices[device] + '.png'});
+                await page.goto(inputtedURL);
+                await page.screenshot({path: 'screens/' + selectedDevices[device] + '.jpg'});
             }
         } else {
             for (device in devices) {
                 await page.emulate( devices[device] );
-                await page.screenshot({path: 'screens/' + devices[device].name + '.png'});            
+                await page.goto(inputtedURL);
+                await page.screenshot({path: 'screens/' + devices[device].name + '.jpg'});            
             }
         }
 
