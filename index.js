@@ -2,10 +2,16 @@ const puppeteer = require('puppeteer');
 const devices = require('puppeteer/DeviceDescriptors');
 const Confirm = require('prompt-confirm');
 
+if (process.argv.length <= 2) {
+    console.log("Incorrect Usage. Please use the following format:\n npm run generate-screenshots https://www.google.com ['iPhone 6', iPhone 5'] | all");
+    process.exit(0);
+}
+
 let parameters = process.argv.slice(2);
 let numImages = 0;
 let inputtedURL = parameters[0];
 let selectedDevices = parameters[1];
+
 
 if ( selectedDevices === "all" ) {
     numImages = devices.length;
@@ -13,7 +19,7 @@ if ( selectedDevices === "all" ) {
     selectedDevices = Array.from(selectedDevices.split(/,\s*/));
     numImages = selectedDevices.length;
 }
-
+/*
 new Confirm('This will generate ' + numImages + ' images, are you sure?').ask(function(answer) {
     if (answer) {
         generate();
@@ -43,3 +49,4 @@ let generate = function() {
         browser.close();
     });
 };
+*/
