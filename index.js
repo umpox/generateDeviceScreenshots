@@ -31,7 +31,7 @@ let generate = function() {
         if (selectedDevices !== "") {
             for (device in selectedDevices) {
                 await page.emulate( devices[ selectedDevices[device] ] );
-                await page.screenshot({path: selectedDevices[device] + '.png'});
+                await page.screenshot({path: 'screens/' + selectedDevices[device] + '.png'});
             }
         } else {
             for (device in devices) {
