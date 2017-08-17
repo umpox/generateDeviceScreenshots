@@ -2,15 +2,15 @@ const puppeteer = require('puppeteer');
 const devices = require('puppeteer/DeviceDescriptors');
 const Confirm = require('prompt-confirm');
 
-let parameters = process.argv.slice(2)[0];
-let selectedDevices = "";
+let parameters = process.argv.slice(2);
 let numImages = 0;
+let inputtedURL = parameters[0];
+let selectedDevices = parameters[1].split(/,\s*/);
 
-if ( parameters === "all" ) {
-    selectedDevices = "";
+if ( selectedDevices === "all" ) {
     numImages = devices.length;
 } else {
-    selectedDevices = ['iPhone 6', 'iPhone 4'];
+    selectedDevices = Array.from(selectedDevices);
     numImages = selectedDevices.length;
 }
 
@@ -26,9 +26,9 @@ let generate = function() {
     puppeteer.launch().then(async browser => {
         let page = await browser.newPage();
 
-        await page.goto('https://www.google.com');
+        await page.goto(inputtedURL);
 
-        if (selectedDevices !== "") {
+        if (selectedDevices !== "all") {
             for (device in selectedDevices) {
                 await page.emulate( devices[ selectedDevices[device] ] );
                 await page.screenshot({path: 'screens/' + selectedDevices[device] + '.png'});
