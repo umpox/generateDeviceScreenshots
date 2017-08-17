@@ -11,7 +11,7 @@ let parameters = process.argv.slice(2);
 let numImages = 0;
 let inputtedURL = parameters[0];
 let selectedDevices = parameters[1];
-
+let fullScreenStatus = false;
 
 if ( selectedDevices === "all" ) {
     numImages = devices.length;
@@ -19,7 +19,14 @@ if ( selectedDevices === "all" ) {
     selectedDevices = Array.from(selectedDevices.split(/,\s*/));
     numImages = selectedDevices.length;
 }
-/*
+
+//This will call under the example command:
+// npm run generate-screenshots https://www.google.com ['iPhone6'] fullscreen
+if (parameters[2] === 'fullscreen') {
+    fullScreenStatus = true;
+}
+
+
 new Confirm('This will generate ' + numImages + ' images, are you sure?').ask(function(answer) {
     if (answer) {
         generate();
@@ -36,17 +43,16 @@ let generate = function() {
             for (device in selectedDevices) {
                 await page.emulate( devices[ selectedDevices[device] ] );
                 await page.goto(inputtedURL);
-                await page.screenshot({path: 'screens/' + selectedDevices[device] + '.jpg'});
+                await page.screenshot({path: 'screens/' + selectedDevices[device] + '.jpg', fullPage: fullScreenStatus});
             }
         } else {
             for (device in devices) {
                 await page.emulate( devices[device] );
                 await page.goto(inputtedURL);
-                await page.screenshot({path: 'screens/' + devices[device].name + '.jpg'});            
+                await page.screenshot({path: 'screens/' + devices[device].name + '.jpg', fullPage: fullScreenStatus});            
             }
         }
 
         browser.close();
     });
 };
-*/
