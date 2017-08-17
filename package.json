@@ -1,0 +1,22 @@
+{
+  "name": "generate-device-screenshots",
+  "version": "1.0.0",
+  "description": "Generate device screenshots of a webpage through the command line",
+  "main": "index.js",
+  "scripts": {
+    "generate-screenshots": "index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/umpox/generateDeviceScreenshots.git"
+  },
+  "author": "Tom Ross",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/umpox/generateDeviceScreenshots/issues"
+  },
+  "homepage": "https://github.com/umpox/generateDeviceScreenshots#readme",
+  "dependencies": {
+    "puppeteer": "^0.9.0"
+  }
+}
