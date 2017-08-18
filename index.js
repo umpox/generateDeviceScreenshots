@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const puppeteer = require('puppeteer');
 const devices = require('puppeteer/DeviceDescriptors');
 const Confirm = require('prompt-confirm');
