@@ -1,7 +1,5 @@
 # generate-device-screenshots
-A simple command line tool to generate device screenshots of different webpages
-
-## Getting Started
+A simple command line tool to generate device screenshots of different webpages.
 
 ## Installation
 *generate-device-screenshots requires Node version 7.10 or greater*
@@ -41,18 +39,16 @@ Then add the following to your `package.json` file
 
 
 ## Parameter documentation
-
-#### Required parameters
 `npm run generate-device-screenshots <url> <devices> <fullscreen> <force-yes>`
 
 ```
-<URL>
+<url>
 - Required
 - Example: https://example.com
 ```
 
 ```
-<Devices>
+<devices>
 - Required
 - Example 1: "iPhone 6"
 - Example 2: "iPhone 6, iPhone 5"
