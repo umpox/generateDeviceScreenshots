@@ -1,6 +1,6 @@
 {
   "name": "generate-device-screenshots",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Generate device screenshots of a webpage through the command line",
   "main": "index.js",
   "scripts": {
