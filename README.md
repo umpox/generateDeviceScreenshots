@@ -67,3 +67,5 @@ Then add the following to your `package.json` file
 - Optional
 - Example: force-yes
 ```
+
+## [Example Screenshots](EXAMPLES.md)
