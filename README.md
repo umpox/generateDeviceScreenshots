@@ -17,7 +17,7 @@ Then add the following to your `package.json` file
 ```
 
 
-> **Note**: Installing generate-device-screenshots will use [Puppeteer](https://github.com/GoogleChrome/puppeteer), a headless version of Chromium (~71Mb Mac, ~90Mb Linux, ~110Mb Win)
+> **Note**: Installing generate-device-screenshots will install [Puppeteer](https://github.com/GoogleChrome/puppeteer), a headless version of Chromium (~71Mb Mac, ~90Mb Linux, ~110Mb Win)
 
 
 
