@@ -26,7 +26,7 @@ Then add the following to your `package.json` file
 `npm run generate-device-screenshots https://example.com "iPhone 6"`
 
 #### Generate screenshots from multiple devices
-`npm run generate-device-screenshots https://example.com "iPhone 6, Nexus 10"`
+`npm run generate-device-screenshots https://example.com "iPhone 6, Nexus 10, iPhone 4"`
 
 #### Generate screenshots from [every device currently available in Google developer tools](https://github.com/GoogleChrome/puppeteer/blob/master/DeviceDescriptors.js)
 `npm run generate-device-screenshots https://example.com "all"`
