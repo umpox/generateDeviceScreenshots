@@ -37,7 +37,7 @@ if ( selectedDevices === "all" ) {
 }
 
 //Handle modifier input
-for (modifier in modifiers) {
+for (let modifier in modifiers) {
     switch (modifiers[modifier]) {
         case 'fullscreen':
             fullScreenStatus = true;
