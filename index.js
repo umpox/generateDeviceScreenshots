@@ -53,34 +53,32 @@ for (let modifier in modifiers) {
     }
 }
 
-let generate = function() {
-    (async() => {
-        const browser = await puppeteer.launch();
-        let page = await browser.newPage();
-        let currentDevice;
+let generate = async () => {
+    const browser = await puppeteer.launch();
+    let page = await browser.newPage();
+    let currentDevice;
 
-        if (selectedDevices !== "all") {
-            for (let i=0; i<selectedDevices.length; i++) {
-                currentDevice = selectedDevices[i]
+    if (selectedDevices !== "all") {
+        for (let i=0; i<selectedDevices.length; i++) {
+            currentDevice = selectedDevices[i]
 
-                await page.emulate( devices[ currentDevice ] );
-                await page.goto(inputtedURL);
-                await page.screenshot({path: 'generated-screenshots/' + currentDevice + '.jpg', fullPage: fullScreenStatus});
-                console.log('Created file: ' + currentDevice + '.jpg' + ' inside folder: ' + dir);            
-            }
-        } else {
-            for (let i=0; i<devices.length; i++) {
-                currentDevice = devices[i];
-
-                await page.emulate( currentDevice );
-                await page.goto(inputtedURL);
-                await page.screenshot({path: 'generated-screenshots/' + currentDevice.name + '.jpg', fullPage: fullScreenStatus});
-                console.log('Created file: ' + currentDevice.name + '.jpg' + ' inside folder: ' + dir);   
-            }
+            await page.emulate( devices[ currentDevice ] );
+            await page.goto(inputtedURL);
+            await page.screenshot({path: 'generated-screenshots/' + currentDevice + '.jpg', fullPage: fullScreenStatus});
+            console.log('Created file: ' + currentDevice + '.jpg' + ' inside folder: ' + dir);            
         }
+    } else {
+        for (let i=0; i<devices.length; i++) {
+            currentDevice = devices[i];
 
-        browser.close();
-    })();
+            await page.emulate( currentDevice );
+            await page.goto(inputtedURL);
+            await page.screenshot({path: 'generated-screenshots/' + currentDevice.name + '.jpg', fullPage: fullScreenStatus});
+            console.log('Created file: ' + currentDevice.name + '.jpg' + ' inside folder: ' + dir);   
+        }
+    }
+
+    browser.close();
 };
 
 //Prompt user for confirmation - as long as force-yes isn't provided as a modifier
