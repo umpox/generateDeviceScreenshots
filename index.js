@@ -18,7 +18,7 @@ let fullScreenStatus = false;
 let forceYes = false;
 
 //Check user has provided enough information
-if (process.argv.length <= 2) {
+if (process.argv.length <= 2 || inputtedURL === undefined || selectedDevices === undefined) {
     console.log('Incorrect Usage. Please use the following format:\n npm run generate-screenshots https://www.google.com "iPhone 6, iPhone 5"');
     process.exit(0);
 }
