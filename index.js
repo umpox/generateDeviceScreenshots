@@ -20,7 +20,7 @@ let forceYes = false;
 //Check user has provided enough information
 if (process.argv.length <= 2 || inputtedURL === undefined || selectedDevices === undefined) {
     console.log('Incorrect Usage. Please use the following format:\n npm run generate-screenshots https://www.google.com "iPhone 6, iPhone 5"');
-    process.exit(0);
+    process.exit(1);
 }
 
 //Check for screenshots folder, if not found then create it
@@ -58,24 +58,29 @@ let generate = async () => {
     let page = await browser.newPage();
     let currentDevice;
 
-    if (selectedDevices !== "all") {
-        for (let i=0; i<selectedDevices.length; i++) {
-            currentDevice = selectedDevices[i]
+    try {
+        if (selectedDevices !== "all") {
+            for (let i=0; i<selectedDevices.length; i++) {
+                currentDevice = selectedDevices[i]
 
-            await page.emulate( devices[ currentDevice ] );
-            await page.goto(inputtedURL);
-            await page.screenshot({path: 'generated-screenshots/' + currentDevice + '.jpg', fullPage: fullScreenStatus});
-            console.log('Created file: ' + currentDevice + '.jpg' + ' inside folder: ' + dir);            
-        }
-    } else {
-        for (let i=0; i<devices.length; i++) {
-            currentDevice = devices[i];
+                await page.emulate( devices[ currentDevice ] );
+                await page.goto(inputtedURL);
+                await page.screenshot({path: 'generated-screenshots/' + currentDevice + '.jpg', fullPage: fullScreenStatus});
+                console.log('Created file: ' + currentDevice + '.jpg' + ' inside folder: ' + dir);            
+            }
+        } else {
+            for (let i=0; i<devices.length; i++) {
+                currentDevice = devices[i];
 
-            await page.emulate( currentDevice );
-            await page.goto(inputtedURL);
-            await page.screenshot({path: 'generated-screenshots/' + currentDevice.name + '.jpg', fullPage: fullScreenStatus});
-            console.log('Created file: ' + currentDevice.name + '.jpg' + ' inside folder: ' + dir);   
+                await page.emulate( currentDevice );
+                await page.goto(inputtedURL);
+                await page.screenshot({path: 'generated-screenshots/' + currentDevice.name + '.jpg', fullPage: fullScreenStatus});
+                console.log('Created file: ' + currentDevice.name + '.jpg' + ' inside folder: ' + dir);   
+            }
         }
+    } catch (e) {
+        console.log(e);
+        process.exitCode = 1;
     }
 
     browser.close();
@@ -89,7 +94,7 @@ if (forceYes) {
         if (answer) {
             generate();
         } else {
-            process.exit(0);
+            process.exitCode = 0;
         }
     });
 }
