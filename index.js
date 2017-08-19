@@ -26,7 +26,7 @@ if (process.argv.length <= 2) {
 //Check for screenshots folder, if not found then create it
 const dir = './generated-screenshots';
 if (!fs.existsSync(dir)){
-    console.log("Creating folder '" + dir + "'...");
+    console.log(`Creating folder ${dir}...`);
     fs.mkdirSync(dir);
 }
 
@@ -48,7 +48,7 @@ for (let modifier in modifiers) {
             forceYes = true;
             break;
         default:
-            console.log('Incorrect modifier provided: ' + modifiers[modifier]);
+            console.log(`Incorrect modifier provided: ${modifiers[modifier]}`);
             process.exit(0);
     }
 }
@@ -65,8 +65,8 @@ let generate = function() {
 
                 await page.emulate( devices[ currentDevice ] );
                 await page.goto(inputtedURL);
-                await page.screenshot({path: 'generated-screenshots/' + currentDevice + '.jpg', fullPage: fullScreenStatus});
-                console.log('Created file: ' + currentDevice + '.jpg' + ' inside folder: ' + dir);            
+                await page.screenshot({path: `generated-screenshots/${currentDevice}.jpg`, fullPage: fullScreenStatus});
+                console.log(`Created file: ${currentDevice}.jpg inside folder: ${dir}`);
             }
         } else {
             for (let i=0; i<devices.length; i++) {
@@ -74,8 +74,8 @@ let generate = function() {
 
                 await page.emulate( currentDevice );
                 await page.goto(inputtedURL);
-                await page.screenshot({path: 'generated-screenshots/' + currentDevice.name + '.jpg', fullPage: fullScreenStatus});
-                console.log('Created file: ' + currentDevice.name + '.jpg' + ' inside folder: ' + dir);   
+                await page.screenshot({path: `generated-screenshots/${currentDevice.name}.jpg`, fullPage: fullScreenStatus});
+                console.log(`Created file: ${currentDevice.name}.jpg inside folder: ${dir}`);
             }
         }
 
@@ -87,7 +87,7 @@ let generate = function() {
 if (forceYes) {
     generate();
 } else {
-    new Confirm('This will generate ' + numImages + ' images, are you sure you wish to proceed').ask(function(answer) {
+    new Confirm(`This will generate ${numImages} images, are you sure you wish to proceed`).ask(function(answer) {
         if (answer) {
             generate();
         } else {
