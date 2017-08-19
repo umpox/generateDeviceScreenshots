@@ -26,7 +26,7 @@ if (process.argv.length <= 2) {
 //Check for screenshots folder, if not found then create it
 const dir = './generated-screenshots';
 if (!fs.existsSync(dir)){
-    console.log("Creating folder '" + dir + "'...");
+    console.log(`Creating folder ${dir}...`);
     fs.mkdirSync(dir);
 }
 
@@ -48,7 +48,7 @@ for (let modifier in modifiers) {
             forceYes = true;
             break;
         default:
-            console.log('Incorrect modifier provided: ' + modifiers[modifier]);
+            console.log(`Incorrect modifier provided: ${modifiers[modifier]}`);
             process.exit(0);
     }
 }
@@ -85,7 +85,7 @@ let generate = async () => {
 if (forceYes) {
     generate();
 } else {
-    new Confirm('This will generate ' + numImages + ' images, are you sure you wish to proceed').ask(function(answer) {
+    new Confirm(`This will generate ${numImages} images, are you sure you wish to proceed`).ask(function(answer) {
         if (answer) {
             generate();
         } else {
