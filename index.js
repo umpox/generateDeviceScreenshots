@@ -3,26 +3,19 @@
 const puppeteer = require('puppeteer');
 const devices = require('puppeteer/DeviceDescriptors');
 const Confirm = require('prompt-confirm');
-var fs = require('fs');
+const fs = require('fs');
 
-let parameters = process.argv.slice(2);
+const parameters = process.argv.slice(2);
 let numImages = 0;
 
 //Required inputs
-let inputtedURL = parameters[0];
+const inputtedURL = parameters[0];
 let selectedDevices = parameters[1];
 
 //Modifier inputs
-let modifiers = parameters.slice(2);
+const modifiers = parameters.slice(2);
 let fullScreenStatus = false;
 let forceYes = false;
-
-//Check for screenshots folder, if not found then create it
-let dir = './generated-screenshots';
-if (!fs.existsSync(dir)){
-    console.log("Creating folder '" + dir + "'...");
-    fs.mkdirSync(dir);
-}
 
 //Check user has provided enough information
 if (process.argv.length <= 2) {
@@ -30,11 +23,18 @@ if (process.argv.length <= 2) {
     process.exit(0);
 }
 
+//Check for screenshots folder, if not found then create it
+const dir = './generated-screenshots';
+if (!fs.existsSync(dir)){
+    console.log("Creating folder '" + dir + "'...");
+    fs.mkdirSync(dir);
+}
+
 //Handle device input
 if ( selectedDevices === "all" ) {
     numImages = devices.length;
 } else {
-    selectedDevices = Array.from(selectedDevices.split(/,\s*/));
+    selectedDevices = selectedDevices.split(/,\s*/);
     numImages = selectedDevices.length;
 }
 
@@ -57,28 +57,31 @@ let generate = function() {
     (async() => {
         const browser = await puppeteer.launch();
         let page = await browser.newPage();
+        let currentDevice;
 
         if (selectedDevices !== "all") {
-            for (var i=0; i<selectedDevices.length; i++) {
-                await page.emulate( devices[ selectedDevices[i] ] );
+            for (let i=0; i<selectedDevices.length; i++) {
+                currentDevice = selectedDevices[i]
+
+                await page.emulate( devices[ currentDevice ] );
                 await page.goto(inputtedURL);
-                await page.screenshot({path: 'generated-screenshots/' + selectedDevices[i] + '.jpg', fullPage: fullScreenStatus});
-                console.log('Created file: ' + selectedDevices[i] + '.jpg' + ' inside folder: ' + dir);            
+                await page.screenshot({path: 'generated-screenshots/' + currentDevice + '.jpg', fullPage: fullScreenStatus});
+                console.log('Created file: ' + currentDevice + '.jpg' + ' inside folder: ' + dir);            
             }
         } else {
-            for (var i=0; i<devices.length; i++) {
-                await page.emulate( devices[i] );
+            for (let i=0; i<devices.length; i++) {
+                currentDevice = devices[i];
+
+                await page.emulate( currentDevice );
                 await page.goto(inputtedURL);
-                await page.screenshot({path: 'generated-screenshots/' + devices[i].name + '.jpg', fullPage: fullScreenStatus});
-                console.log('Created file: ' + devices[i].name + '.jpg' + ' inside folder: ' + dir);   
+                await page.screenshot({path: 'generated-screenshots/' + currentDevice.name + '.jpg', fullPage: fullScreenStatus});
+                console.log('Created file: ' + currentDevice.name + '.jpg' + ' inside folder: ' + dir);   
             }
         }
 
         browser.close();
     })();
 };
-
-
 
 //Prompt user for confirmation - as long as force-yes isn't provided as a modifier
 if (forceYes) {
