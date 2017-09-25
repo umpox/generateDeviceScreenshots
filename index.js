@@ -54,11 +54,11 @@ for (let modifier in modifiers) {
 }
 
 let generate = async () => {
-    const browser = await puppeteer.launch();
-    let page = await browser.newPage();
-    let currentDevice;
-
     try {
+        const browser = await puppeteer.launch();
+        let page = await browser.newPage();
+        let currentDevice;
+
         if (selectedDevices !== "all") {
             for (let i=0; i<selectedDevices.length; i++) {
                 currentDevice = selectedDevices[i]
